@@ -3,23 +3,54 @@ package org.example.pages.PageObjectModel;
 import org.example.base.CommonToAllPage;
 import org.openqa.selenium.By;
 
+import static org.example.driver.DriverManagerTL.getDriver;
+
 public class DashboardPage extends CommonToAllPage {
 
 
     // Page Locators
     By Dashboard_Popup = By.xpath("//h5[contains(text(), 'Hostel Admission')]");
     By Modal_Dismiss = By.xpath("//a[@data-dismiss=\"modal\"]");
+    By giveTestButton = By.xpath("//input[@onclick=\"callAlert(4142,'Objective')\"]");
+    By Test_Quiz = By.xpath("//p[contains(text(),'Test/Quiz')]");
+
+
 
 
 
     // Page Actions
 
-    public String LoggedInPopUp(){
+    // Verify popup is visible
+    public String getDashboardPopupText() {
         presenceOfElement(Dashboard_Popup);
-        visibilityOfElement(Dashboard_Popup);
-        jsClick(Modal_Dismiss);
         return getElement(Dashboard_Popup).getText().trim();
     }
+
+    // Close popup
+    public void closeDashboardPopup() {
+        jsClick(Modal_Dismiss);
+    }
+
+    // Scroll
+    public void scrollDownToClickTest() {
+        scrollAndPause(Test_Quiz);
+    }
+
+    // Click
+    public void clickToTestQuizTab() {
+        visibilityOfElement(Test_Quiz);
+        presenceOfElement(Test_Quiz);
+        clickElement(Test_Quiz);
+    }
+
+
+
+
+
+
+
+
+
 
 
 

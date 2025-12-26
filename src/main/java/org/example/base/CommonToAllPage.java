@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 import static org.example.driver.DriverManagerTL.getDriver;
 
@@ -51,6 +52,57 @@ public class CommonToAllPage {
     public WebElement getElement(By key){
         return getDriver().findElement(key);
     }
+
+    public void scrollToBottom() {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+    }
+
+    public void scrollToElement(By by) {
+        WebElement element = visibilityOfElement(by);
+        ((JavascriptExecutor) getDriver())
+                .executeScript("arguments[0].scrollIntoView({behavior:'instant', block:'center'});", element);
+    }
+
+
+    public void scrollDownByPixels(int pixels) {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("window.scrollBy(0," + pixels + ")");
+    }
+
+    public boolean isElementPresent(By by) {
+        return getDriver().findElements(by).size() > 0;
+    }
+
+    public String getText(By by) {
+        return visibilityOfElement(by).getText().trim();
+    }
+
+
+    public void waitForSeconds(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000L);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    public List<WebElement> getElements(By by) {
+        return getDriver().findElements(by);
+    }
+
+    public void scrollAndPause(By by) {
+        scrollToElement(by);
+        waitForSeconds(1); // Let UI settle
+    }
+
+
+
+
+
+
+
+
 
 
 }
