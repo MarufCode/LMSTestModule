@@ -24,7 +24,7 @@ public class TestQuizPage extends CommonToAllPage {
     private By questionOptions = By.xpath("//input[( @type='radio' or @type='checkbox' ) and contains(@name,'testQuestions')]");
 
 
-    private By saveAndNextBtn =By.xpath("//div[contains(@class,'nextWrap')]//button[contains(@class,'btn-next')]");
+    private By saveAndNextBtn = By.xpath("//div[contains(@class,'nextWrap')]//button[contains(@class,'btn-next')]");
     private By questionText = By.xpath("//h6[contains(text(),'Questions')]");
     private By testSubmit = By.id("testSubmitFinal");
     private By saveProgressBtn = By.xpath("//*[@id=\"nextQuest\"][1]");
@@ -33,19 +33,16 @@ public class TestQuizPage extends CommonToAllPage {
     private By closeButton = By.xpath("//a[contains(text(),'Close')]");
 
 
-
-
     // PAGE ACTIONS
 
     public void answerAllQuestionsAndFinish(int totalQuestions) {
 
         for (int i = 1; i <= totalQuestions; i++) {
 
-            selectRandomOption();      // answer question
-            clickSaveProgress();       // SAVE NEXT or SAVE COMPLETE
-            waitForNextState();        // wait for app state change
+            selectRandomOption();
+            clickSaveProgress();
+            waitForNextState();
         }
-
         // Final submission
         getElement(testSubmit).click();
         getElement(finalSubmitBtn).click();
@@ -68,15 +65,9 @@ public class TestQuizPage extends CommonToAllPage {
     }
 
 
-
-
-
     private void waitForOptionsToRefresh() {
-
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
-
-        wait.until(driver -> {
-            List<WebElement> options = driver.findElements(questionOptions);
+        wait.until(driver -> {List<WebElement> options = driver.findElements(questionOptions);
 
             for (WebElement opt : options) {
                 if (opt.isDisplayed() && opt.isEnabled()) {
@@ -87,38 +78,26 @@ public class TestQuizPage extends CommonToAllPage {
         });
     }
 
-
-
     private void waitForNextState() {
-
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
-
         wait.until(driver -> {
-
             // Next question loaded
             for (WebElement opt : driver.findElements(questionOptions)) {
                 if (opt.isDisplayed()) {
                     return true;
                 }
             }
-
             // OR final submit page loaded
             if (!driver.findElements(testSubmit).isEmpty()
                     && driver.findElement(testSubmit).isDisplayed()) {
                 return true;
             }
-
             return false;
         });
     }
 
-
-
-
     private void selectRandomOption() {
-
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
-
         List<WebElement> visibleOptions = wait.until(driver -> {
 
             List<WebElement> all = driver.findElements(questionOptions);
@@ -132,20 +111,13 @@ public class TestQuizPage extends CommonToAllPage {
             return visible.isEmpty() ? null : visible;
         });
 
-        WebElement randomOption =
-                visibleOptions.get(new Random().nextInt(visibleOptions.size()));
+        WebElement randomOption = visibleOptions.get(new Random().nextInt(visibleOptions.size()));
 
-        ((JavascriptExecutor) getDriver())
-                .executeScript("arguments[0].click();", randomOption);
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", randomOption);
     }
 
 
-
-
-
-
     private void clickSaveAndNext() {
-
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
 
         WebElement visibleButton = wait.until(driver -> {
@@ -162,17 +134,6 @@ public class TestQuizPage extends CommonToAllPage {
     }
 
 
-
-
-
-    private void submitTest() {
-        visibilityOfElement(testSubmit);
-        clickElement(testSubmit);
-
-        visibilityOfElement(finalSubmitBtn);
-        clickElement(finalSubmitBtn);
-    }
-
     public boolean isTestSubmittedSuccessfully() {
         return visibilityOfElement(confirmMessage).isDisplayed();
     }
@@ -182,9 +143,6 @@ public class TestQuizPage extends CommonToAllPage {
             clickElement(closeButton);
         }
     }
-
-
-
 
 
 }
