@@ -1,5 +1,6 @@
 package org.example.utils;
 
+import io.qameta.allure.Attachment;
 import org.example.driver.DriverManagerTL;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -10,11 +11,13 @@ import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static org.example.driver.DriverManagerTL.getDriver;
+
 public class ScreenshotUtil {
 
     public static String captureScreenshot(String testName) {
 
-        if (DriverManagerTL.getDriver() == null) {
+        if (getDriver() == null) {
             System.out.println("Driver is null. Screenshot not captured.");
             return null;
         }
@@ -25,7 +28,7 @@ public class ScreenshotUtil {
         String screenshotPath = System.getProperty("user.dir")
                 + "/screenshots/" + testName + "_" + timestamp + ".png";
 
-        File src = ((TakesScreenshot) DriverManagerTL.getDriver())
+        File src = ((TakesScreenshot) getDriver())
                 .getScreenshotAs(OutputType.FILE);
 
         File dest = new File(screenshotPath);
@@ -38,5 +41,16 @@ public class ScreenshotUtil {
         }
 
         return screenshotPath;
+    }
+
+    @Attachment(value = "Failure Screenshot", type = "image/png")
+    public static byte[] captureScreenshotForAllure() {
+
+        if (getDriver() == null) {
+            return new byte[0];
+        }
+
+        return ((TakesScreenshot) getDriver())
+                .getScreenshotAs(OutputType.BYTES);
     }
 }

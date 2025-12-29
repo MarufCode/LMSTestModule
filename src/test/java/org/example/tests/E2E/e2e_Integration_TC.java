@@ -8,7 +8,9 @@ import org.example.pages.PageObjectModel.LogInPage;
 import org.example.pages.PageObjectModel.TestQuizPage;
 import org.example.utils.PropertyReader;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
 
 public class e2e_Integration_TC extends CommonToAllTest {
 
@@ -42,8 +44,10 @@ public class e2e_Integration_TC extends CommonToAllTest {
 
         TestQuizPage quizPage = new TestQuizPage();
         quizPage.answerAllQuestionsAndFinish(10);
-        quizPage.waitForSeconds(5);
-        Assert.assertTrue(quizPage.isTestSubmittedSuccessfully(), "Congratulations!");
+        quizPage.waitForSeconds(2);
+        String confirmationText = quizPage.isTestSubmittedSuccessfully();
+        Assert.assertEquals(confirmationText, PropertyReader.readKey("Confirm_Message"));
+        quizPage.waitForSeconds(3);
         quizPage.closeConfirmationPopup();
 
 

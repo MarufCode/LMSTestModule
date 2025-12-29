@@ -44,6 +44,7 @@ public class TestQuizPage extends CommonToAllPage {
             waitForNextState();
         }
         // Final submission
+        answerQuestions(totalQuestions);
         getElement(testSubmit).click();
         getElement(finalSubmitBtn).click();
     }
@@ -134,8 +135,8 @@ public class TestQuizPage extends CommonToAllPage {
     }
 
 
-    public boolean isTestSubmittedSuccessfully() {
-        return visibilityOfElement(confirmMessage).isDisplayed();
+    public String isTestSubmittedSuccessfully() {
+        return visibilityOfElement(confirmMessage).getText();
     }
 
     public void closeConfirmationPopup() {
@@ -143,6 +144,30 @@ public class TestQuizPage extends CommonToAllPage {
             clickElement(closeButton);
         }
     }
+
+    public void answerQuestions(int numberOfQuestions) {
+        for (int i = 1; i <= numberOfQuestions; i++) {
+            selectRandomOption();
+            clickSaveProgress();
+            waitForNextState();
+        }
+    }
+
+    public void moveToNextQuestionOnly(int steps) {
+        for (int i = 1; i <= steps; i++) {
+            clickSaveProgress();
+            waitForNextState();
+        }
+    }
+
+    // Try final submission (used for negative scenarios)
+    public void attemptFinalSubmit() {
+        getElement(testSubmit).click();
+        getElement(finalSubmitBtn).click();
+    }
+
+
+
 
 
 }
