@@ -1,22 +1,20 @@
-package org.example.tests;
+package org.example.tests.E2E;
 
 import io.qameta.allure.Owner;
-import org.assertj.core.api.Assertions;
 import org.example.basetest.CommonToAllTest;
 import org.example.pages.PageObjectModel.DashboardPage;
 import org.example.pages.PageObjectModel.GiveTestPage;
 import org.example.pages.PageObjectModel.LogInPage;
+import org.example.pages.PageObjectModel.TestQuizPage;
 import org.example.utils.PropertyReader;
-import org.openqa.selenium.JavascriptExecutor;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.example.driver.DriverManagerTL.getDriver;
-
-public class TestLogin extends CommonToAllTest {
+public class e2e_Integration_TC extends CommonToAllTest {
 
 
-    @Test
+    @Test(description  = "Verify end-to-end integration scenario: User logs in, navigates to dashboard, starts Test/quiz, answers all questions " +
+            "and successfully submits the test")
     @Owner("Maruf")
     public void testFullE2EIntegrationScenario() {
 
@@ -33,11 +31,22 @@ public class TestLogin extends CommonToAllTest {
 
         dashboardPage.scrollDownToClickTest();
         dashboardPage.clickToTestQuizTab();
-        dashboardPage.waitForSeconds(5);
 
         GiveTestPage giveTestPage = new GiveTestPage();
+        giveTestPage.clickLastTableItem();
+        giveTestPage.waitForSeconds(2);
         String actualText = giveTestPage.getTestQuizDashboardText();
         Assert.assertEquals(actualText, PropertyReader.readKey("expected_test_quiz_text"));
+        giveTestPage.clickOkButtonToStartTest();
+        giveTestPage.waitForSeconds(2);
+
+        TestQuizPage quizPage = new TestQuizPage();
+        quizPage.answerAllQuestionsAndFinish(10);
+        quizPage.waitForSeconds(5);
+        Assert.assertTrue(quizPage.isTestSubmittedSuccessfully(), "Congratulations!");
+        quizPage.closeConfirmationPopup();
+
+
 
 
 

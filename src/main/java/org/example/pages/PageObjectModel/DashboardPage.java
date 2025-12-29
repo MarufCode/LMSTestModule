@@ -11,7 +11,7 @@ public class DashboardPage extends CommonToAllPage {
     // Page Locators
     By Dashboard_Popup = By.xpath("//h5[contains(text(), 'Hostel Admission')]");
     By Modal_Dismiss = By.xpath("//a[@data-dismiss=\"modal\"]");
-    By giveTestButton = By.xpath("//input[@onclick=\"callAlert(4142,'Objective')\"]");
+    By giveTestButton = By.xpath("//input[@onclick=\"callAlert(4141,'Objective')\"]");
     By Test_Quiz = By.xpath("//p[contains(text(),'Test/Quiz')]");
 
 
@@ -28,7 +28,9 @@ public class DashboardPage extends CommonToAllPage {
 
     // Close popup
     public void closeDashboardPopup() {
-        jsClick(Modal_Dismiss);
+        if (isElementPresent(Dashboard_Popup)) {
+            jsClick(Modal_Dismiss);
+        }
     }
 
     // Scroll
@@ -41,6 +43,18 @@ public class DashboardPage extends CommonToAllPage {
         visibilityOfElement(Test_Quiz);
         presenceOfElement(Test_Quiz);
         clickElement(Test_Quiz);
+    }
+
+    // Navigate to Test/Quiz
+    public void openTestQuizSection() {
+        scrollToElement(Test_Quiz);
+        jsClick(Test_Quiz);
+    }
+
+    // Start Quiz
+    public void clickGiveTest() {
+        scrollToElement(giveTestButton);
+        jsClick(giveTestButton);
     }
 
 

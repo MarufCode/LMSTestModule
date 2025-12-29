@@ -7,7 +7,7 @@
     </listeners>
     <test verbose="2" preserve-order="true" name="C:/Users/Maruf.sherikar.EXT.SVKMGRP/IdeaProjects/LMSTestModule">
         <classes>
-            <class name="org.example.tests.TestLogin">
+            <class name="org.example.tests.E2E.e2e_Integration_TC">
                 <methods>
                     <include name="testLogInPositive"/>
                 </methods>

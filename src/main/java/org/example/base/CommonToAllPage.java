@@ -64,6 +64,14 @@ public class CommonToAllPage {
                 .executeScript("arguments[0].scrollIntoView({behavior:'instant', block:'center'});", element);
     }
 
+    public void scrollToElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript(
+                "arguments[0].scrollIntoView({block:'center'});",
+                element
+        );
+    }
+
 
     public void scrollDownByPixels(int pixels) {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
@@ -93,8 +101,39 @@ public class CommonToAllPage {
 
     public void scrollAndPause(By by) {
         scrollToElement(by);
-        waitForSeconds(1); // Let UI settle
+        waitForSeconds(1);
     }
+
+    public void scrollTableToBottom(By tableContainer) {
+        WebElement table = getElement(tableContainer);
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("arguments[0].scrollTop = arguments[0].scrollHeight", table);
+    }
+
+    public void scrollTableAndClickLastRow(By tableContainer, By tableRows) {
+
+        scrollTableToBottom(tableContainer);
+        List<WebElement> rows = getElements(tableRows);
+        WebElement lastRow = rows.get(rows.size() - 1);
+        ((JavascriptExecutor) getDriver())
+                .executeScript("arguments[0].scrollIntoView({block:'center'});", lastRow);
+        lastRow.click();
+    }
+
+    public void handleAlertIfPresent() {
+        try {
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
+            wait.until(ExpectedConditions.alertIsPresent());
+            getDriver().switchTo().alert().accept();
+        } catch (Exception ignored) {
+            // No alert present
+        }
+    }
+
+
+
+
+
 
 
 
