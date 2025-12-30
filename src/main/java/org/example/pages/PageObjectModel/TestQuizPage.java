@@ -26,7 +26,7 @@ public class TestQuizPage extends CommonToAllPage {
 
     private By saveAndNextBtn = By.xpath("//div[contains(@class,'nextWrap')]//button[contains(@class,'btn-next')]");
     private By questionText = By.xpath("//h6[contains(text(),'Questions')]");
-    private By testSubmit = By.id("testSubmitFinal");
+    private By testSubmit = By.xpath("//button[@id=\"testSubmitFinal\"]");
     private By saveProgressBtn = By.xpath("//*[@id=\"nextQuest\"][1]");
     private By finalSubmitBtn = By.xpath("//button[contains(text(),'Submit')][1]");
     private By confirmMessage = By.xpath("//strong[contains(text(),'Congratulations!')]");

@@ -23,8 +23,7 @@ public class PreventEarlyTestSubmissionTest extends CommonToAllTest {
         DashboardPage dashboardPage = logInPage.afterLoginWithValidCred();
         Assert.assertEquals(
                 dashboardPage.getDashboardPopupText(),
-                PropertyReader.readKey("expected_dash_text")
-        );
+                PropertyReader.readKey("expected_dash_text"));
 
         dashboardPage.closeDashboardPopup();
         dashboardPage.waitForSeconds(1);
