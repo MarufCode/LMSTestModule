@@ -12,16 +12,14 @@ public class testAttemptCountValidation_TC extends CommonToAllTest {
     @Owner("Maruf")
     public void verifyAttemptCountNotDecrementedAfterSubmission() {
 
-        // ---------- Login ----------
+
         LogInPage logInPage = new LogInPage();
         logInPage.openLogInURL();
         logInPage.LogInWithValidCred();
 
-        // ---------- Navigate to Test/Quiz ----------
         DashboardTestQuizNavigator navigator = new DashboardTestQuizNavigator();
         navigator.navigateToTestQuizSafely();
 
-        // ---------- Start & Submit Test ----------
         GiveTestPage giveTestPage = new GiveTestPage();
         giveTestPage.clickLastTableItem();
         giveTestPage.waitForSeconds(2);
@@ -31,13 +29,11 @@ public class testAttemptCountValidation_TC extends CommonToAllTest {
         quizPage.answerAllQuestionsAndFinish(10);
         quizPage.waitForSeconds(2);
 
-        // ---------- Read Reattempt count (AFTER submission only) ----------
         TestAttemptPage attemptPage = new TestAttemptPage();
         int remainingAttempts = attemptPage.getRemainingAttempts();
 
         System.out.println("Remaining attempts after submission: " + remainingAttempts);
 
-        // ❌ BUG VALIDATION
         Assert.assertTrue(remainingAttempts > 0, "Attempt count SHOULD have been decremented, but user can still reattempt");
 
         quizPage.closeConfirmationPopup();
