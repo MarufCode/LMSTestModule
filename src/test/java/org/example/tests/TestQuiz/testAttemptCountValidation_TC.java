@@ -3,9 +3,12 @@ package org.example.tests.E2E;
 import io.qameta.allure.Owner;
 import org.example.basetest.CommonToAllTest;
 import org.example.pages.PageObjectModel.*;
+import org.example.utils.AttemptStoreUtil;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(org.example.listeners.TestListener.class)
 public class testAttemptCountValidation_TC extends CommonToAllTest {
 
     @Test(description = "Verify test attempt count is NOT decremented after submission (Defect validation)")
@@ -29,13 +32,22 @@ public class testAttemptCountValidation_TC extends CommonToAllTest {
         quizPage.answerAllQuestionsAndFinish(10);
         quizPage.waitForSeconds(2);
 
+        // ---------- Read remaining attempts ----------
         TestAttemptPage attemptPage = new TestAttemptPage();
-        int remainingAttempts = attemptPage.getRemainingAttempts();
+        int currentAttempts = attemptPage.getRemainingAttempts();
 
-        System.out.println("Remaining attempts after submission: " + remainingAttempts);
+        System.out.println("Remaining attempts after submission: " + currentAttempts);
 
-        Assert.assertTrue(remainingAttempts > 0, "Attempt count SHOULD have been decremented, but user can still reattempt");
+        Integer previousAttempts = AttemptStoreUtil.getPreviousAttempt();
 
+        if (previousAttempts != null) {
+            Assert.assertEquals(currentAttempts, previousAttempts - 1, "BUG: Attempt count did not decrement correctly");
+        } else {
+            System.out.println("First run detected, skipping decrement assertion");
+        }
+
+        // ---------- Save for next run ----------
+        AttemptStoreUtil.saveCurrentAttempt(currentAttempts);
         quizPage.closeConfirmationPopup();
     }
 }

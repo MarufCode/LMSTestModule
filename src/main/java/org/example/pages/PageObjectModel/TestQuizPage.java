@@ -4,6 +4,7 @@ import org.example.base.CommonToAllPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -38,19 +39,23 @@ public class TestQuizPage extends CommonToAllPage {
     public void answerAllQuestionsAndFinish(int totalQuestions) {
 
         for (int i = 1; i <= totalQuestions; i++) {
-
             selectRandomOption();
             clickSaveProgress();
             waitForNextState();
         }
-        // Final submission
-        answerQuestions(totalQuestions);
-        getElement(testSubmit).click();
-        getElement(finalSubmitBtn).click();
+
+        // ✅ Final submission (SAFE)
+        attemptFinalSubmit();
     }
 
-
     private void clickSaveProgress() {
+
+        // ✅ If submit button is visible, do NOT try to click Save
+        if (!getDriver().findElements(testSubmit).isEmpty()
+                && getDriver().findElement(testSubmit).isDisplayed()) {
+            System.out.println("Submit visible, skipping Save button");
+            return;
+        }
 
         List<WebElement> buttons = getDriver().findElements(saveProgressBtn);
 
@@ -64,7 +69,6 @@ public class TestQuizPage extends CommonToAllPage {
 
         throw new RuntimeException("Save button not found to click");
     }
-
 
     private void waitForOptionsToRefresh() {
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
@@ -98,24 +102,44 @@ public class TestQuizPage extends CommonToAllPage {
     }
 
     private void selectRandomOption() {
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
-        List<WebElement> visibleOptions = wait.until(driver -> {
 
-            List<WebElement> all = driver.findElements(questionOptions);
-            List<WebElement> visible = new ArrayList<>();
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
-            for (WebElement e : all) {
-                if (e.isDisplayed() && e.isEnabled()) {
-                    visible.add(e);
-                }
+        // 1️⃣ If submit button is visible, do NOT try to answer
+        if (!getDriver().findElements(testSubmit).isEmpty()
+                && getDriver().findElement(testSubmit).isDisplayed()) {
+            System.out.println("Submit button visible, no more questions to answer");
+            return;
+        }
+
+        // 2️⃣ Try to fetch visible options (WITHOUT infinite wait)
+        List<WebElement> allOptions = getDriver().findElements(questionOptions);
+        List<WebElement> visibleOptions = new ArrayList<>();
+
+        for (WebElement option : allOptions) {
+            if (option.isDisplayed() && option.isEnabled()) {
+                visibleOptions.add(option);
             }
-            return visible.isEmpty() ? null : visible;
-        });
+        }
 
-        WebElement randomOption = visibleOptions.get(new Random().nextInt(visibleOptions.size()));
+        // 3️⃣ If no options & submit not visible → wait briefly and retry once
+        if (visibleOptions.isEmpty()) {
+            wait.until(driver ->
+                    !driver.findElements(questionOptions).isEmpty()
+                            || (!driver.findElements(testSubmit).isEmpty()
+                            && driver.findElement(testSubmit).isDisplayed())
+            );
+            return;
+        }
 
-        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", randomOption);
+        // 4️⃣ Select random option
+        WebElement randomOption =
+                visibleOptions.get(new Random().nextInt(visibleOptions.size()));
+
+        ((JavascriptExecutor) getDriver())
+                .executeScript("arguments[0].click();", randomOption);
     }
+
 
 
     private void clickSaveAndNext() {
@@ -160,14 +184,14 @@ public class TestQuizPage extends CommonToAllPage {
         }
     }
 
-    // Try final submission (used for negative scenarios)
     public void attemptFinalSubmit() {
-        getElement(testSubmit).click();
-        getElement(finalSubmitBtn).click();
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20));
+        WebElement submitBtn = wait.until(ExpectedConditions.elementToBeClickable(testSubmit));
+        submitBtn.click();
+
+        WebElement confirmBtn = wait.until(ExpectedConditions.elementToBeClickable(finalSubmitBtn));
+        confirmBtn.click();
     }
-
-
-
 
 
 }
