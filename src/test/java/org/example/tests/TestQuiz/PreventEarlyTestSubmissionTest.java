@@ -28,37 +28,27 @@ public class PreventEarlyTestSubmissionTest extends CommonToAllTest {
         dashboardPage.closeDashboardPopup();
         dashboardPage.waitForSeconds(1);
 
-        // ---------- Navigate to Test / Quiz ----------
         dashboardPage.scrollDownToClickTest();
         dashboardPage.clickToTestQuizTab();
 
-        // ---------- Give Test Page ----------
         GiveTestPage giveTestPage = new GiveTestPage();
         giveTestPage.clickLastTableItem();
         giveTestPage.waitForSeconds(2);
 
-        Assert.assertEquals(
-                giveTestPage.getTestQuizDashboardText(),
-                PropertyReader.readKey("expected_test_quiz_text")
-        );
+        Assert.assertEquals(giveTestPage.getTestQuizDashboardText(), PropertyReader.readKey("expected_test_quiz_text"));
 
         giveTestPage.clickOkButtonToStartTest();
         giveTestPage.waitForSeconds(2);
 
-        // ---------- Quiz Page ----------
         TestQuizPage quizPage = new TestQuizPage();
 
-        // Answer first 5 questions
         quizPage.answerQuestions(5);
 
-        // Move till last question WITHOUT answering Q6–Q9
         quizPage.moveToNextQuestionOnly(5);
 
-        // Attempt final submission
         quizPage.attemptFinalSubmit();
         quizPage.waitForSeconds(2);
 
-        // Validate submission is BLOCKED
         boolean successDisplayed;
         try {
             quizPage.isTestSubmittedSuccessfully();
@@ -67,19 +57,12 @@ public class PreventEarlyTestSubmissionTest extends CommonToAllTest {
             successDisplayed = false;
         }
 
-        Assert.assertFalse(
-                successDisplayed,
-                "Test should NOT be submitted when some questions are unanswered"
-        );
+        Assert.assertFalse(successDisplayed, "Test should NOT be submitted when some questions are unanswered");
 
-        // ---------- Now answer everything properly ----------
         quizPage.answerAllQuestionsAndFinish(10);
 
         String confirmationText = quizPage.isTestSubmittedSuccessfully();
-        Assert.assertEquals(
-                confirmationText,
-                PropertyReader.readKey("Confirm_Message")
-        );
+        Assert.assertEquals(confirmationText, PropertyReader.readKey("Confirm_Message"));
 
         quizPage.closeConfirmationPopup();
     }
