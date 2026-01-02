@@ -1,4 +1,4 @@
-package org.example.tests.E2E;
+package org.example.tests.TestQuiz;
 
 import io.qameta.allure.Owner;
 import org.example.basetest.CommonToAllTest;
@@ -34,14 +34,11 @@ public class testTimerVisibilityAfterSubmission_TC extends CommonToAllTest {
 
         // ---------- Validation on Confirmation Page ----------
         TestConfirmationPage confirmationPage = new TestConfirmationPage();
-
         boolean isTimerVisible = confirmationPage.isTestTimerVisible();
-
         System.out.println("Is timer visible after submission: " + isTimerVisible);
 
-        // ❌ BUG VALIDATION
+        // BUG VALIDATION
         Assert.assertFalse(isTimerVisible, "BUG: Test timer is still visible after submission");
-
         quizPage.closeConfirmationPopup();
     }
 }

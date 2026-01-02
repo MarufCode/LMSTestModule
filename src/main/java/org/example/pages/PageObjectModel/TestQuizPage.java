@@ -193,5 +193,4 @@ public class TestQuizPage extends CommonToAllPage {
         confirmBtn.click();
     }
 
-
 }

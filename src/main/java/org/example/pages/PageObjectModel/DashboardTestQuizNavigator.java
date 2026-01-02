@@ -23,10 +23,8 @@ public class DashboardTestQuizNavigator extends CommonToAllPage {
 
     private By Test_Quiz = By.xpath("//p[contains(text(),'Test/Quiz')]");
 
-    /**
-     * Safely closes dashboard popup (if present)
-     * and navigates to Test/Quiz section
-     */
+    // Safely closes dashboard popup (if present) and navigates to Test/Quiz section
+
     public void navigateToTestQuizSafely() {
 
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(15));
