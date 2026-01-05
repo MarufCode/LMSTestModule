@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 
 @Listeners(org.example.listeners.TestListener.class)
-public class PreventEarlyTestSubmissionTest extends CommonToAllTest {
+public class testPreventEarlyTestSubmission_TC extends CommonToAllTest {
 
     @Test(description = "Verify user cannot submit test when middle questions are unanswered")
     @Owner("Maruf")

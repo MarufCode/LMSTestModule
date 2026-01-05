@@ -7,7 +7,7 @@
     </listeners>
     <test verbose="2" preserve-order="true" name="C:/Users/Maruf.sherikar.EXT.SVKMGRP/IdeaProjects/LMSTestModule">
         <classes>
-            <class name="org.example.tests.TestQuiz.PreventEarlyTestSubmissionTest">
+            <class name="org.example.tests.TestQuiz.testPreventEarlyTestSubmission_TC">
             </class>
         </classes>
     </test>
