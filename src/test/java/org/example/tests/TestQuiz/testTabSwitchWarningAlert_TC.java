@@ -1,4 +1,4 @@
-package org.example.tests.E2E;
+package org.example.tests.TestQuiz;
 
 import io.qameta.allure.Owner;
 import org.example.basetest.CommonToAllTest;
@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 public class testTabSwitchWarningAlert_TC extends CommonToAllTest {
 
-    @Test(description = "Verify warning alert appears on each tab switch and auto-submit after 3 attempts")
+    @Test(groups = {"regression"}, description = "Verify warning alert appears on each tab switch and auto-submit after 3 attempts")
     @Owner("Maruf")
     public void verifyTabSwitchWarningAlert() {
 

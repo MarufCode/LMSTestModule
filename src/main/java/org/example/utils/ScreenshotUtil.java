@@ -11,14 +11,12 @@ import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static org.example.driver.DriverManagerTL.getDriver;
-
 public class ScreenshotUtil {
 
     public static String captureScreenshot(String testName) {
 
-        if (getDriver() == null) {
-            System.out.println("Driver is null. Screenshot not captured.");
+        if (DriverManagerTL.getDriver() == null) {
+            System.out.println("Driver is null. Local screenshot not captured.");
             return null;
         }
 
@@ -28,7 +26,7 @@ public class ScreenshotUtil {
         String screenshotPath = System.getProperty("user.dir")
                 + "/screenshots/" + testName + "_" + timestamp + ".png";
 
-        File src = ((TakesScreenshot) getDriver())
+        File src = ((TakesScreenshot) DriverManagerTL.getDriver())
                 .getScreenshotAs(OutputType.FILE);
 
         File dest = new File(screenshotPath);
@@ -43,14 +41,15 @@ public class ScreenshotUtil {
         return screenshotPath;
     }
 
-    @Attachment(value = "Failure Screenshot", type = "image/png")
-    public static byte[] captureScreenshotForAllure() {
+    @Attachment(value = "{testName} - Failure Screenshot", type = "image/png")
+    public static byte[] captureScreenshotForAllure(String testName) {
 
-        if (getDriver() == null) {
+        if (DriverManagerTL.getDriver() == null) {
+            System.out.println("Driver is null. Allure screenshot not captured.");
             return new byte[0];
         }
 
-        return ((TakesScreenshot) getDriver())
+        return ((TakesScreenshot) DriverManagerTL.getDriver())
                 .getScreenshotAs(OutputType.BYTES);
     }
 }

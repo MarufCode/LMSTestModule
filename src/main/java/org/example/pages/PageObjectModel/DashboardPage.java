@@ -17,12 +17,13 @@ public class DashboardPage extends CommonToAllPage {
 
 
 
-
     // Page Actions
 
     // Verify popup is visible
     public String getDashboardPopupText() {
         presenceOfElement(Dashboard_Popup);
+        visibilityOfElement(Dashboard_Popup);
+        waitForSeconds(1);
         return getElement(Dashboard_Popup).getText().trim();
     }
 

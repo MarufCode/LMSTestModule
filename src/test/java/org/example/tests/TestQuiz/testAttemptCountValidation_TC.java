@@ -1,4 +1,4 @@
-package org.example.tests.E2E;
+package org.example.tests.TestQuiz;
 
 import io.qameta.allure.Owner;
 import org.example.basetest.CommonToAllTest;
@@ -8,10 +8,9 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(org.example.listeners.TestListener.class)
 public class testAttemptCountValidation_TC extends CommonToAllTest {
 
-    @Test(description = "Verify test attempt count is NOT decremented after submission (Defect validation)")
+    @Test(groups = {"regression"}, description = "Verify test attempt count is NOT decremented after submission (Defect validation)")
     @Owner("Maruf")
     public void verifyAttemptCountNotDecrementedAfterSubmission() {
 

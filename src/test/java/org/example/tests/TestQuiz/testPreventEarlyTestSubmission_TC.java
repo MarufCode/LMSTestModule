@@ -9,10 +9,9 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 
-@Listeners(org.example.listeners.TestListener.class)
 public class testPreventEarlyTestSubmission_TC extends CommonToAllTest {
 
-    @Test(description = "Verify user cannot submit test when middle questions are unanswered")
+    @Test(groups = {"regression"}, description = "Verify user cannot submit test when middle questions are unanswered")
     @Owner("Maruf")
     public void verifySubmissionBlockedIfMiddleQuestionsUnanswered() {
 

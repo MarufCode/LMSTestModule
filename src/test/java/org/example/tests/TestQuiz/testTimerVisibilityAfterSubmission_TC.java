@@ -7,10 +7,9 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(org.example.listeners.TestListener.class)
 public class testTimerVisibilityAfterSubmission_TC extends CommonToAllTest {
 
-    @Test(description = "Verify test timer is NOT visible after test submission")
+    @Test(groups = {"regression"}, description = "Verify test timer is NOT visible after test submission")
     @Owner("Maruf")
     public void verifyTimerIsNotVisibleAfterSubmission() {
 

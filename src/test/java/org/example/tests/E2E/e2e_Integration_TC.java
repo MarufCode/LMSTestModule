@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 public class e2e_Integration_TC extends CommonToAllTest {
 
 
-    @Test(description  = "Verify end-to-end integration scenario: User logs in, navigates to dashboard, starts Test/quiz, answers all questions " +
+    @Test(groups = {"pre-prod", "prod"}, description  = "Verify end-to-end integration scenario: User logs in, navigates to dashboard, starts Test/quiz, answers all questions " +
             "and successfully submits the test")
     @Owner("Maruf")
     public void testFullE2EIntegrationScenario() {

@@ -2,6 +2,7 @@ package org.example.pages.PageObjectModel;
 
 import org.example.base.CommonToAllPage;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,13 +13,17 @@ import static org.example.driver.DriverManagerTL.getDriver;
 
 public class TestTabSwitchAlertPage extends CommonToAllPage {
 
+    // Locators
+//    private By confirmMessage = By.xpath("//strong[contains(text(),'Congratulations!')]");
+
+
     // Waits for tab-switch warning alert and returns its text
 
     public String getTabSwitchWarningText() {
 
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
         Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-        return alert.getText();
+        return alert.getText().trim();
     }
 
      // Accepts the warning alert

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Regression Test Suite" verbose="2">
+    <listeners>
+        <listener class-name="org.example.listeners.TestListener"/>
+    </listeners>
+    <test name="Regression Tests" preserve-order="true">
+        <!-- Run ONLY regression group -->
+        <groups>
+            <run>
+                <include name="preprod"/>
+            </run>
+        </groups>
+        <!-- Scan packages instead of listing classes -->
+        <packages>
+            <package name="org.example.tests.*"/>
+        </packages>
+    </test>
+</suite>
