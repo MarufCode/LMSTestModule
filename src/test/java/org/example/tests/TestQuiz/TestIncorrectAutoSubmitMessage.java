@@ -8,9 +8,9 @@ import org.example.utils.TabSwitchUtil;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import io.qameta.allure.testng.AllureTestNg;
 
-@Listeners(org.example.listeners.TestListener.class)
-public class testIncorrectAutoSubmitMessage_TC extends CommonToAllTest {
+public class TestIncorrectAutoSubmitMessage extends CommonToAllTest {
 
 
     @Test(groups = {"regression"},description = "Verify correct auto-submission message is shown after exceeding tab switch limit")

@@ -12,7 +12,7 @@ public class TestListener implements ITestListener {
         String testName = result.getMethod().getMethodName();
 
         ScreenshotUtil.captureScreenshot(testName);
-        ScreenshotUtil.captureScreenshotForAllure(testName);
+        ScreenshotUtil.captureScreenshotForAllure();
 
         System.out.println("Screenshot captured and attached to Allure");
     }

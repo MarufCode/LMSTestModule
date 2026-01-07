@@ -5,7 +5,6 @@ import org.example.basetest.CommonToAllTest;
 import org.example.pages.PageObjectModel.*;
 import org.example.utils.AttemptStoreUtil;
 import org.testng.Assert;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 public class testAttemptCountValidation_TC extends CommonToAllTest {

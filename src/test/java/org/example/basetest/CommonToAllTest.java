@@ -1,6 +1,8 @@
 package org.example.basetest;
 
 import org.example.driver.DriverManagerTL;
+import org.example.utils.ScreenshotUtil;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -13,8 +15,15 @@ public class CommonToAllTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDown(){
+    public void tearDown(ITestResult result) {
+
+        if (ITestResult.FAILURE == result.getStatus()) {
+            ScreenshotUtil.captureScreenshotForAllure(); // Allure
+            ScreenshotUtil.captureScreenshot(result.getMethod().getMethodName()); // Local
+        }
         DriverManagerTL.down();
     }
+
+
 
 }

@@ -8,48 +8,56 @@ import org.openqa.selenium.TakesScreenshot;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ScreenshotUtil {
 
-    public static String captureScreenshot(String testName) {
+    public static void captureScreenshot(String testName) {
 
         if (DriverManagerTL.getDriver() == null) {
             System.out.println("Driver is null. Local screenshot not captured.");
-            return null;
+            return;
         }
 
         String timestamp = LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
 
-        String screenshotPath = System.getProperty("user.dir")
-                + "/screenshots/" + testName + "_" + timestamp + ".png";
-
-        File src = ((TakesScreenshot) DriverManagerTL.getDriver())
-                .getScreenshotAs(OutputType.FILE);
-
-        File dest = new File(screenshotPath);
+        Path screenshotPath = Paths.get(
+                System.getProperty("user.dir"),
+                "screenshots",
+                testName + "_" + timestamp + ".png"
+        );
 
         try {
-            Files.createDirectories(dest.getParentFile().toPath());
-            Files.copy(src.toPath(), dest.toPath());
+            Files.createDirectories(screenshotPath.getParent());
+
+            File src = ((TakesScreenshot) DriverManagerTL.getDriver())
+                    .getScreenshotAs(OutputType.FILE);
+
+            Files.copy(src.toPath(), screenshotPath, StandardCopyOption.REPLACE_EXISTING);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return screenshotPath;
     }
 
-    @Attachment(value = "{testName} - Failure Screenshot", type = "image/png")
-    public static byte[] captureScreenshotForAllure(String testName) {
+
+
+    @Attachment(value = "Failure Screenshot", type = "image/png")
+    public static byte[] captureScreenshotForAllure() {
+        System.out.println(">>> ALLURE SCREENSHOT METHOD CALLED <<<");
 
         if (DriverManagerTL.getDriver() == null) {
-            System.out.println("Driver is null. Allure screenshot not captured.");
+            System.out.println(">>> DRIVER IS NULL <<<");
             return new byte[0];
         }
-
-        return ((TakesScreenshot) DriverManagerTL.getDriver())
-                .getScreenshotAs(OutputType.BYTES);
+        byte[] bytes = ((TakesScreenshot) DriverManagerTL.getDriver()).getScreenshotAs(OutputType.BYTES);
+        System.out.println(">>> SCREENSHOT SIZE = " + bytes.length);
+        return bytes;
     }
+
 }
