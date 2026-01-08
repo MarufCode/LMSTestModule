@@ -3,13 +3,12 @@ package org.example.tests.TestQuiz;
 import io.qameta.allure.Owner;
 import org.example.basetest.CommonToAllTest;
 import org.example.pages.PageObjectModel.*;
-import org.example.utils.AttemptStoreUtil;
 import org.example.utils.PropertyReader;
 import org.example.utils.TabSwitchUtil;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class testTabSwitchWarningAlert_TC extends CommonToAllTest {
+public class TestTabSwitchWarningAlert extends CommonToAllTest {
 
     @Test(groups = {"regression"}, description = "Verify warning alert appears on each tab switch and auto-submit after 3 attempts")
     @Owner("Maruf")

@@ -7,7 +7,7 @@ import org.example.utils.AttemptStoreUtil;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class testAttemptCountValidation_TC extends CommonToAllTest {
+public class TestAttemptCountValidation extends CommonToAllTest {
 
     @Test(groups = {"regression"}, description = "Verify test attempt count is NOT decremented after submission (Defect validation)")
     @Owner("Maruf")

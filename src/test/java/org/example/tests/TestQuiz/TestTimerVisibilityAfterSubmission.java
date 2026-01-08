@@ -4,10 +4,9 @@ import io.qameta.allure.Owner;
 import org.example.basetest.CommonToAllTest;
 import org.example.pages.PageObjectModel.*;
 import org.testng.Assert;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-public class testTimerVisibilityAfterSubmission_TC extends CommonToAllTest {
+public class TestTimerVisibilityAfterSubmission extends CommonToAllTest {
 
     @Test(groups = {"regression"}, description = "Verify test timer is NOT visible after test submission")
     @Owner("Maruf")

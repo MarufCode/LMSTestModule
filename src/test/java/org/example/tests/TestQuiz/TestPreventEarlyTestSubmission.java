@@ -5,11 +5,10 @@ import org.example.basetest.CommonToAllTest;
 import org.example.pages.PageObjectModel.*;
 import org.example.utils.PropertyReader;
 import org.testng.Assert;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 
-public class testPreventEarlyTestSubmission_TC extends CommonToAllTest {
+public class TestPreventEarlyTestSubmission extends CommonToAllTest {
 
     @Test(groups = {"regression"}, description = "Verify user cannot submit test when middle questions are unanswered")
     @Owner("Maruf")
