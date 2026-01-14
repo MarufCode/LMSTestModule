@@ -29,7 +29,6 @@ public class CommonToAllPage {
         ((JavascriptExecutor)getDriver()).executeScript("arguments[0].click();", element);
     }
 
-
     public void enterInput(By by, String key) {
         WebElement element = visibilityOfElement(by);
         element.clear();
@@ -41,13 +40,10 @@ public class CommonToAllPage {
         return wait.until(ExpectedConditions.presenceOfElementLocated(elementLocation));
     }
 
-
     public WebElement visibilityOfElement(By elementLocation) {
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(30));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(elementLocation));
     }
-
-
 
     public WebElement getElement(By key){
         return getDriver().findElement(key);
@@ -72,7 +68,6 @@ public class CommonToAllPage {
         );
     }
 
-
     public void scrollDownByPixels(int pixels) {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("window.scrollBy(0," + pixels + ")");
@@ -85,7 +80,6 @@ public class CommonToAllPage {
     public String getText(By by) {
         return visibilityOfElement(by).getText().trim();
     }
-
 
     public void waitForSeconds(int seconds) {
         try {
